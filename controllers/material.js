@@ -22,10 +22,14 @@ export const sendone = async (req, res) => {
     try {
         const { id } = req.params;
         const { avgConsumption, reqForThreeMonths, actualReqForThree, stockInHand, daysLeft } = req.body;
-        const response = await Material.updateOne({ _id: id }, { $set: { avgConsumption: avgConsumption, reqForThreeMonths: reqForThreeMonths, actualReqForThree: actualReqForThree, stockInHand: stockInHand, daysLeft: daysLeft } })
+        console.log(req.body);
+        console.log(id);
+        const response = await Material.findOneAndUpdate({ _id: id },{$set:  { avgConsumption: avgConsumption, reqForThreeMonths: reqForThreeMonths, actualReqForThree: actualReqForThree, stockInHand: stockInHand, daysLeft: daysLeft }});
+        console.log(response);
+        console.log("here is response");
         res.status(201).json(response);
     } catch (error) {
-        res.status(409).json({ msg: err.message });
+        res.status(409).json({ msg: error.message });
     }
 }
 
